@@ -14,10 +14,10 @@ import java.sql.Timestamp;
 public class Card {
 
     private int id;
-    private String number;
-    private CardType type;
+    private String serialNumber;
+    private CardType cardType;
     private Timestamp date;
     private int ownerId;
-    private String password;
+    private int password;
     private double balance;
 }

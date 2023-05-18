@@ -11,7 +11,6 @@ import org.example.enums.Role;
 @NoArgsConstructor
 @Builder
 public class User {
-
     private int id;
     private String name;
     private String phoneNumber;

@@ -13,5 +13,6 @@ public class Order {
 
     private int id;
     private int userId;
-    private List<Integer> productIds;
+    private int productId;
+    private int amountProduct;
 }

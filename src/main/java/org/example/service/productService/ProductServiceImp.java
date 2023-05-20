@@ -10,7 +10,27 @@ public class ProductServiceImp implements ProductService{
 
 @Override
 public int create(Product product) throws SQLException {
-	return 0;
+	var connection = getConnection();
+	String query = "select add_product(?,?,?,?,?,?,?,?,?)";
+	var preparedStatement = connection.prepareStatement(query);
+	preparedStatement.setString(1, product.getName());
+	preparedStatement.setDouble(2, product.getPrice());
+	preparedStatement.setInt(3, product.getSubCategoryId());
+	preparedStatement.setString(4, product.getDescription());
+	preparedStatement.setString(5, product.getColor());
+	preparedStatement.setString(6, product.getSize());
+	preparedStatement.setInt(7, product.getOwnerId());
+	preparedStatement.setInt(8, product.getAmount());
+	preparedStatement.setString(9, product.getBrand());
+	var resultSet = preparedStatement.executeQuery();
+	var result = -1;
+	if (resultSet.next()) {
+		result = resultSet.getInt(1);
+	}
+	resultSet.close();
+	preparedStatement.close();
+	connection.close();
+	return result;
 }
 
 @Override

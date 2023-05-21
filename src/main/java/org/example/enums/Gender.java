@@ -4,11 +4,11 @@ public enum Gender {
     MALE,
     FEMALE;
 
-    public Gender getGender(String genderName) {
-        Gender[] values = values();
-        for (Gender gender : values) {
-            if (gender.name().equals(genderName))
-                return gender;
+    public static Gender getGender(String gender) {
+        for (Gender value : values()) {
+            if (value.name().equals(gender)) {
+                return value;
+            }
         }
         return null;
     }

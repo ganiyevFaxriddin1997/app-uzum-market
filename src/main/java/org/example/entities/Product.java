@@ -1,14 +1,13 @@
-package org.example.model;
+package org.example.entities;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Product {
-
     private int id;
     private String name;
     private double price;
@@ -18,4 +17,5 @@ public class Product {
     private String size;
     private int ownerId;
     private int amount;
-    private String brand;}
+    private String brand;
+}

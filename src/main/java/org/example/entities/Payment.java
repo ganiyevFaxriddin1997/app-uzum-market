@@ -1,20 +1,23 @@
-package org.example.model;
+package org.example.entities;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Builder
 public class Payment {
-
     private int id;
     private int cardId;
     private List<Order> orders;
     private double price;
     private Timestamp createdDate;
 }
+
+
+
+

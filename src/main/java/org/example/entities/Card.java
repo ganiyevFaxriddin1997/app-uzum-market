@@ -1,18 +1,16 @@
-package org.example.model;
+package org.example.entities;
 
-
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.enums.CardType;
 
 import java.sql.Timestamp;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Builder
 public class Card {
-
     private int id;
     private String serialNumber;
     private CardType cardType;

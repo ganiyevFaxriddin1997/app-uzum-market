@@ -1,16 +1,13 @@
-package org.example.model;
+package org.example.entities;
 
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Order {
-
     private int id;
     private int userId;
     private int productId;

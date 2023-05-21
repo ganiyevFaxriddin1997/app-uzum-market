@@ -6,10 +6,11 @@ public enum Role {
     USER,
     PRODUCT_OWNER;
 
-    public Role getRole(String roleName) {
-        for (Role role : values()) {
-            if (role.name().equals(roleName))
-                return role;
+    public static Role getRole(String role) {
+        for (Role value : values()) {
+            if (value.name().equals(role)) {
+                return value;
+            }
         }
         return null;
     }

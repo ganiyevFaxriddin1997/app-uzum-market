@@ -1,12 +1,12 @@
 package org.example.front;
 
-import org.example.card.CardService;
-import org.example.card.CardServiceImp;
+import org.example.service.card.CardService;
+import org.example.service.card.CardServiceImp;
 import org.example.entities.Card;
 import org.example.entities.Product;
 import org.example.entities.User;
-import org.example.product.ProductService;
-import org.example.product.ProductServiceImp;
+import org.example.service.product.ProductService;
+import org.example.service.product.ProductServiceImp;
 
 import java.sql.SQLException;
 import java.util.List;

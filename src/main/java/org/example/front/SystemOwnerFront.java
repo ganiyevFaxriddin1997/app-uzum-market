@@ -1,17 +1,17 @@
 package org.example.front;
 
-import org.example.card.CardService;
-import org.example.card.CardServiceImp;
-import org.example.category.CategoryService;
-import org.example.category.CategoryServiceImp;
+import org.example.service.card.CardService;
+import org.example.service.card.CardServiceImp;
+import org.example.service.category.CategoryService;
+import org.example.service.category.CategoryServiceImp;
 import org.example.entities.*;
 import org.example.enums.Role;
-import org.example.product.ProductService;
-import org.example.product.ProductServiceImp;
-import org.example.subCategory.SubCategoryService;
-import org.example.subCategory.SubCategoryServiceImp;
-import org.example.user.UserService;
-import org.example.user.UserServiceImp;
+import org.example.service.product.ProductService;
+import org.example.service.product.ProductServiceImp;
+import org.example.service.subCategory.SubCategoryService;
+import org.example.service.subCategory.SubCategoryServiceImp;
+import org.example.service.user.UserService;
+import org.example.service.user.UserServiceImp;
 
 import java.sql.SQLException;
 import java.util.List;

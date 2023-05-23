@@ -1,4 +1,4 @@
-package org.example.category;
+package org.example.service.category;
 
 import org.example.entities.Category;
 import org.example.service.BaseService;

@@ -1,4 +1,4 @@
-package org.example.product;
+package org.example.service.product;
 
 import org.example.dto.ResponseOfBasket;
 import org.example.entities.Product;

@@ -1,4 +1,4 @@
-package org.example.subCategory;
+package org.example.service.subCategory;
 
 import org.example.entities.SubCategory;
 import org.example.service.BaseService;

@@ -1,11 +1,10 @@
-package org.example.subCategory;
+package org.example.service.subCategory;
 
-import org.example.category.CategoryService;
-import org.example.category.CategoryServiceImp;
+import org.example.service.category.CategoryService;
+import org.example.service.category.CategoryServiceImp;
 import org.example.entities.Category;
 import org.example.entities.SubCategory;
 
-import java.beans.PropertyEditorSupport;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

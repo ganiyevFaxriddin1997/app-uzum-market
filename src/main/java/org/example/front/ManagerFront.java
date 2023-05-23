@@ -1,22 +1,24 @@
 package org.example.front;
 
-import org.example.category.CategoryService;
-import org.example.category.CategoryServiceImp;
+import org.example.service.category.CategoryService;
+import org.example.service.category.CategoryServiceImp;
 import org.example.entities.Category;
 import org.example.entities.Product;
 import org.example.entities.SubCategory;
 import org.example.entities.User;
 import org.example.enums.Role;
-import org.example.product.ProductService;
-import org.example.product.ProductServiceImp;
-import org.example.subCategory.SubCategoryService;
-import org.example.subCategory.SubCategoryServiceImp;
-import org.example.user.UserService;
-import org.example.user.UserServiceImp;
+import org.example.service.product.ProductService;
+import org.example.service.product.ProductServiceImp;
+import org.example.service.subCategory.SubCategoryService;
+import org.example.service.subCategory.SubCategoryServiceImp;
+import org.example.service.user.UserService;
+import org.example.service.user.UserServiceImp;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+
+import static org.example.front.SystemOwnerFront.seeSubCategory;
 
 public class ManagerFront {
     static Scanner scannerInt = new Scanner(System.in);
@@ -34,8 +36,7 @@ public class ManagerFront {
             if (option == 1) {
                 workWithCategory(currentUser);
             } else if (option == 2) {
-                int i = enterSubcategory();
-                workWithSubCategory(currentUser, i);
+                workWithSubCategory(currentUser);
             } else if (option == 3) {
                 workWithProduct(currentUser);
             } else if (option == 4) {
@@ -49,7 +50,51 @@ public class ManagerFront {
         }
     }
 
+    private static void workWithSubCategory(User currentUser) throws SQLException {
+        while (true) {
+            System.out.println("1.See sub category\t\t2.Add sub category\t\t3.Delete sub category\t\t0.Exit");
+            int option = scannerInt.nextInt();
+            if (option == 1) {
+                int i = enterSubcategory();
+                seeSubcategory(currentUser, i);
+            } else if (option == 2) {
+                addSubCategory(currentUser);
+            } else if (option == 3) {
+                int categoryId = enterSubcategory();
+                deleteSubCategory(currentUser, categoryId);
+            } else if (option == 0) {
+                break;
+            } else {
+                System.out.println("Wrong option!");
+            }
+        }
+    }
+
+    static void seeSubcategory(User currentUser, int categoryId) throws SQLException {
+        Category category = categoryService.get(categoryId);
+        int cnt = 1;
+        if (category != null) {
+            List<SubCategory> subCategories = subCategoryService.subCategoriesByCategoryName(category.getName());
+            if (subCategories.size()!=0) {
+                for (SubCategory subCategory : subCategories) {
+                    System.out.println(cnt + ". SubCategory name: " + subCategory.getName() +
+                            " => category:" + category.getName());
+                    cnt++;
+                }
+            }else {
+                System.out.println("Sub category not found");
+            }
+        } else {
+            System.out.println("Category was not found");
+        }
+    }
+
     private static int enterSubcategory() throws SQLException {
+        List<Category> categories = categoryService.getAll();
+        int cnt = 1;
+        for (Category category : categories) {
+            System.out.println(cnt + ". name: " + category.getName());
+        }
         System.out.print("enter category name: ");
         String name = scannerStr.nextLine();
         Category category = categoryService.get(name);
@@ -81,12 +126,12 @@ public class ManagerFront {
         int userId = scannerInt.nextInt();
         if ((currentUser.getRole() == Role.OWNER || currentUser.getRole() == Role.ADMIN)) {
             boolean delete = userService.delete(userId);
-            if (delete == true) {
+            if (delete) {
                 System.out.println("Deleted!");
             } else {
                 System.out.println("Error!");
             }
-        }else {
+        } else {
             System.out.println("You are not OWNER or ADMIN, Sorry! ");
         }
     }
@@ -105,7 +150,7 @@ public class ManagerFront {
                 role = Role.ADMIN.name();
             } else if (i == 3) {
                 role = Role.USER.name();
-            }else if (i == 3) {
+            } else if (i == 4) {
                 role = Role.PRODUCT_OWNER.name();
             }
             boolean result = userService.changeRole(role, userId);
@@ -114,7 +159,7 @@ public class ManagerFront {
             } else {
                 System.out.println("Error");
             }
-        }else {
+        } else {
             System.out.println(" Sorry, You are not OWNER!");
         }
     }
@@ -152,7 +197,7 @@ public class ManagerFront {
     private static void deleteProduct(User currentUser) throws SQLException {
         seeProduct(currentUser);
         System.out.print("Enter name of product: ");
-        String name  = scannerStr.nextLine();
+        String name = scannerStr.nextLine();
         var product = productService.get(name);
         if (product != null && (currentUser.getRole().equals(Role.OWNER) || currentUser.getRole().equals(Role.ADMIN))) {
             boolean delete = productService.delete(product.getId());
@@ -168,7 +213,7 @@ public class ManagerFront {
         String categoryName = scannerStr.nextLine();
         Category category = categoryService.get(categoryName);
         if (category == null) return;
-        seeSubCategory(currentUser, category.getId());
+        seeSubcategory(currentUser, category.getId());
         System.out.print("Enter name of sub category: ");
         String name = scannerStr.nextLine();
         var subCategory = subCategoryService.get(name);
@@ -226,72 +271,51 @@ public class ManagerFront {
 
     }
 
-    private static void workWithSubCategory(User currentUser, int categoryId) throws SQLException {
-        while (true) {
-            System.out.println("1.See sub category\t\t2.Add sub category\t\t3.Delete sub category\t\t0.Exit");
-            int option = scannerInt.nextInt();
-            if (option == 1) {
-                seeSubCategory(currentUser, categoryId);
-            } else if (option == 2) {
-                addSubCategory(currentUser);
-            } else if (option == 3) {
-                deleteSubCategory(currentUser, categoryId);
-            } else if (option == 0) {
-                break;
-            } else {
-                System.out.println("Wrong option!");
-            }
-        }
-    }
-
     private static void deleteSubCategory(User currentUser, int categoryId) throws SQLException {
-        seeSubCategory(currentUser, categoryId);
-        System.out.print("Enter name of sub category: ");
-        String subCategoryName = scannerStr.nextLine();
-        var subCategory = subCategoryService.get(subCategoryName);
-        if (subCategory != null && (currentUser.getRole().equals(Role.OWNER) || currentUser.getRole().equals(Role.ADMIN))) {
-            boolean delete = subCategoryService.delete(subCategory.getId());
-            String response = delete ? "success" : "fail";
-            System.out.println(response);
-        } else {
-            System.out.println("Sub category was not found");
+        Category category = categoryService.get(categoryId);
+        if (category!=null) {
+            System.out.print("Enter name of sub category: ");
+            String subCategoryName = scannerStr.nextLine();
+            var subCategory = subCategoryService.get(subCategoryName);
+            if (subCategory != null && (currentUser.getRole().equals(Role.OWNER) || currentUser.getRole().equals(Role.ADMIN))) {
+                boolean delete = subCategoryService.delete(subCategory.getId());
+                String response = delete ? "success" : "fail";
+                System.out.println(response);
+            } else {
+                System.out.println("Sub category was not found");
+            }
+        }else {
+            System.out.println("Category was not found");
         }
     }
 
     private static void addSubCategory(User currentUser) throws SQLException {
         seeCategory(currentUser);
-        System.out.print("Enter category Id: ");
-        int categoryId = scannerInt.nextInt();
-        System.out.println("Enter sub category name: ");
-        String subCategoryName = scannerStr.nextLine();
-        var subCategory = SubCategory
-                .builder()
-                .name(subCategoryName)
-                .categoryId(categoryId)
-                .build();
-        int subCategoryId = subCategoryService.create(subCategory);
-        var response = subCategoryId != -1 ? "Success" : "Error";
-        System.out.println(response);
-    }
-
-
-    static void seeSubCategory(User currentUser, int categoryId) throws SQLException {
-        Category category = categoryService.get(categoryId);
-        List<SubCategory> subCategories = subCategoryService.subCategoriesByCategoryName(category.getName());
-        int[] cnt = {1};
-        if (subCategories == null){
-            return;
-        }
-        if (subCategories.size()==0){
-            return;
-        }
-        System.out.println("<===========Subcategories===========>");
-        subCategories.forEach(subCategory -> {
-            if (subCategory.getCategoryId()==categoryId){
-                System.out.println(cnt[0] + ". " + subCategory.getName());
-                cnt[0]++;
+        System.out.print("Enter category name: ");
+        String categoryName = scannerStr.nextLine();
+        if (categoryName.length() != 0) {
+            Category category = categoryService.get(categoryName);
+            if (category != null) {
+                System.out.println("Enter sub category name: ");
+                String subCategoryName = scannerStr.nextLine();
+                if (subCategoryName.length() != 0) {
+                    var subCategory = SubCategory
+                            .builder()
+                            .name(subCategoryName)
+                            .categoryId(category.getId())
+                            .build();
+                    int subCategoryId = subCategoryService.create(subCategory);
+                    var response = subCategoryId != -1 ? "Sub category created!" : "Error";
+                    System.out.println(response);
+                } else {
+                    System.out.println("You entered nothing for sub category!");
+                }
+            } else {
+                System.out.println("Category was not found!");
             }
-        });
+        } else {
+            System.out.println("You entered nothing!");
+        }
     }
 
     private static void workWithCategory(User currentUser) throws SQLException {
@@ -340,12 +364,16 @@ public class ManagerFront {
     private static void addCategory(User currentUser) throws SQLException {
         System.out.print("Enter name of category: ");
         String name = scannerStr.nextLine();
-        var category = Category
-                .builder()
-                .name(name)
-                .build();
-        int categoryId = categoryService.create(category);
-        var response = categoryId != -1 ? "Success" : "Error";
-        System.out.println(response);
+        if (name.length() != 0) {
+            var category = Category
+                    .builder()
+                    .name(name)
+                    .build();
+            int categoryId = categoryService.create(category);
+            var response = categoryId != -1 ? "Category was created" : "Error";
+            System.out.println(response);
+        } else {
+            System.out.println("You didn't enter anything!");
+        }
     }
 }

@@ -1,25 +1,24 @@
 package org.example.front;
 
 
-import org.example.card.CardService;
-import org.example.card.CardServiceImp;
-import org.example.category.CategoryService;
-import org.example.category.CategoryServiceImp;
+import org.example.service.card.CardService;
+import org.example.service.card.CardServiceImp;
+import org.example.service.category.CategoryService;
+import org.example.service.category.CategoryServiceImp;
 import org.example.dto.ResponseOfBasket;
 import org.example.entities.*;
 import org.example.enums.CardType;
-import org.example.order.OrderService;
-import org.example.order.OrderServiceImp;
-import org.example.payment.PaymentService;
-import org.example.payment.PaymentServiceImp;
-import org.example.subCategory.SubCategoryService;
-import org.example.subCategory.SubCategoryServiceImp;
-import org.example.user.UserService;
-import org.example.user.UserServiceImp;
+import org.example.service.order.OrderService;
+import org.example.service.order.OrderServiceImp;
+import org.example.service.payment.PaymentService;
+import org.example.service.payment.PaymentServiceImp;
+import org.example.service.subCategory.SubCategoryService;
+import org.example.service.subCategory.SubCategoryServiceImp;
+import org.example.service.user.UserService;
+import org.example.service.user.UserServiceImp;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -59,52 +58,32 @@ public class UserFront {
 
     private static void paymentHistory(User currentUser) throws SQLException {
 
-        Card card = cardService.getByOwnerId(currentUser.getId());
-        List<Integer> paymentIds = paymentService.getPaymentIds(currentUser.getId());
+        List<Card> cards = cardService.getByOwnerId(currentUser.getId());
 
-        for (Integer paymentId : paymentIds) {
-            List<Integer> orderFromPaymentOrder = paymentService.getOrderFromPaymentOrder(paymentId);
-            for (Integer integer : orderFromPaymentOrder) {
-                Order order = orderService.get(integer);
-                Product product = productService.get(order.getProductId());
-                System.out.println(product.getName());
-                System.out.println(order.getAmountProduct());
+        int cntPayment = 1;
+
+        for (Card card : cards) {
+            List<Payment> payments = paymentService.getByCardId(card.getId());
+            for (Payment payment : payments) {
+
+                List<Order> orders = paymentService.getOrderFromPO(payment.getId());
+                int cnt = 1;
+                System.out.println("================< " + cntPayment + " >================");
+                for (Order order : orders) {
+                    Product product = productService.get(order.getProductId());
+                    System.out.println(cnt + ".Name: " + product.getName() +
+                            " => Price: " + product.getPrice() +
+                            " => Amount: " + order.getAmountProduct());
+                    cnt++;
+                }
+                System.out.println("  Sum of price: " + payment.getPrice() +
+                        " => Date: " + payment.getCreatedDate() +
+                        " => Card number: " + card.getSerialNumber());
+                cntPayment++;
             }
         }
-
-
-
-//        List<Payment> newPayment = new ArrayList<>();
-//
-//        List<Payment> paymentList = paymentService.getAll();
-//
-//        for (int i = 0; i < paymentList.size(); i++) {
-//
-//            List<Integer> orderIds = paymentService.getOrderFromPaymentOrder(paymentList.get(i).getId());
-//            List<Order> orders = new ArrayList<>();
-//            for (Integer orderId : orderIds) {
-//
-//                Order order = orderService.get(orderId);
-//                if (order.getUserId() == currentUser.getId()) {
-//                    orders.add(order);
-//                }
-//            }
-//
-//            Payment payment1 = Payment.builder()
-//                    .id(paymentList.get(i).getId())
-//                    .cardId(paymentList.get(i).getCardId())
-//                    .orders(orders)
-//                    .price(paymentList.get(i).getPrice())
-//                    .createdDate(paymentList.get(i).getCreatedDate())
-//                    .build();
-//            newPayment.add(payment1);
-//        }
-//        int cnt = 1;
-//        for (Payment payment : newPayment) {
-//            System.out.println(payment.getPrice() + " $ => date: " + payment.getCreatedDate());
-//            cnt++;
-//        }
     }
+
 
     private static void searchProduct(User currentUser) throws SQLException {
         System.out.println("Enter product name:");
@@ -332,7 +311,7 @@ public class UserFront {
         String serialNumber = scannerStr.nextLine();
 
         Card cardBySerialNumber = cardService.getCardBySerialNumber(serialNumber);
-        if (cardBySerialNumber!=null) {
+        if (cardBySerialNumber != null) {
             if (cardBySerialNumber.getOwnerId() == currentUser.getId()) {
                 double sumOfPriceFromBasket = productService.getSumOfPriceFromBasket(currentUser.getId());
 
@@ -343,16 +322,15 @@ public class UserFront {
                 int id = paymentService.create(payment);
                 if (id > 0) {
                     List<Integer> orderIdFromBasket = productService.getOrderIdFromBasket(currentUser.getId());
-                        boolean result = false;
+                    boolean result = false;
 
                     for (int i = 0; i < orderIdFromBasket.size(); i++) {
 
-                        paymentService.createPaymentOrder(currentUser.getId(), orderIdFromBasket.get(i));
+                        paymentService.createPaymentOrder(id, orderIdFromBasket.get(i));
                         Order order = orderService.get(orderIdFromBasket.get(i));
                         Product product = productService.get(order.getProductId());
 
                         User owner = userService.getByRole("OWNER");
-                        Card ownerCard = cardService.getByOwnerId(owner.getId());
 
                         result = paymentService.takeMoneyFromUserToProductOwner(
                                 serialNumber,
@@ -360,13 +338,13 @@ public class UserFront {
                                 product.getOwnerId(),
                                 order.getAmountProduct(),
                                 order.getProductId(),
-                                ownerCard.getOwnerId());
+                                owner.getId());
                     }
-                        if (result) {
-                            System.out.println("Success!");
-                        } else {
-                            System.out.println("Fail");
-                        }
+                    if (result) {
+                        System.out.println("Success!");
+                    } else {
+                        System.out.println("Fail");
+                    }
 
                     boolean result1 = orderService.cleanBasket(currentUser.getId());
 
@@ -376,7 +354,7 @@ public class UserFront {
             } else {
                 System.out.println("This card is not yours!");
             }
-        }else {
+        } else {
             System.out.println("Card not found!!!");
         }
     }
@@ -434,46 +412,47 @@ public class UserFront {
         String name = scannerStr.nextLine();
         var category = categoryService.get(name);
         if (category != null) {
-            seeSubCategory(currentUser, category.getId());
+            seeSubcategory(currentUser, category.getId());
             List<SubCategory> subCategories = subCategoryService.subCategoriesByCategoryName(name);
-            if (subCategories != null&&subCategories.size()!=0){
-            System.out.println("Enter sub category name: ");
-            String subCategoryName = scannerStr.nextLine();
-            var subCategory = subCategoryService.get(subCategoryName);
-            if (subCategory != null) {
-                seeProduct(currentUser);
-                System.out.println("Enter name of product: ");
-                String productName = scannerStr.nextLine();
-                var product = productService.get(productName);
-                if (product != null) {
-                    System.out.println("Amount product in base: " + product.getAmount());
-                    System.out.println("Enter amount of product to purchase: ");
-                    int amount = scannerInt.nextInt();
-                    if (product.getAmount() >= amount) {
-                        int orderId = orderService.createOrder(currentUser.getId(), product.getId(), amount);
-                        if (orderId != 0) {
-                            int i = orderService.checkOrderFromBasket(currentUser.getId(), product.getName());
-                            if (i < 0) {
-                                boolean result = productService.addToBasket(currentUser.getId(), orderId);
-                                if (result) {
-                                    System.out.println("Added to basket");
-                                } else {
-                                    System.out.println("Error");
-                                }
+            if (subCategories != null && subCategories.size() != 0) {
+                System.out.println("Enter sub category name: ");
+                String subCategoryName = scannerStr.nextLine();
+                var subCategory = subCategoryService.get(subCategoryName);
+                if (subCategory != null) {
+                    seeProduct(currentUser);
+                    System.out.println("Enter name of product: ");
+                    String productName = scannerStr.nextLine();
+                    var product = productService.get(productName);
+                    if (product != null) {
+                        System.out.println("Amount product in base: " + product.getAmount());
+                        System.out.println("Enter amount of product to purchase: ");
+                        int amount = scannerInt.nextInt();
+                        if (product.getAmount() >= amount) {
+                            int orderId = orderService.createOrder(currentUser.getId(), product.getId(), amount);
+                            if (orderId != 0) {
+                                int i = orderService.checkOrderFromBasket(currentUser.getId(), product.getName());
+                                if (i < 0) {
+                                    boolean result = productService.addToBasket(currentUser.getId(), orderId);
+                                    if (result) {
+                                        System.out.println("Added to basket");
+                                    } else {
+                                        System.out.println("Error");
+                                    }
 
+                                } else {
+                                    System.out.println("Such order already exist");
+                                }
                             } else {
-                                System.out.println("Such order already exist");
+                                System.out.println("Error");
                             }
                         } else {
-                            System.out.println("Error");
+                            System.out.println("Product is not enough in base to purchase. Enter other amount!");
                         }
                     } else {
-                        System.out.println("Product is not enough in base to purchase. Enter other amount!");
+                        System.out.println("Product not found");
                     }
-                } else {
-                    System.out.println("Product not found");
                 }
-            } }else {
+            } else {
                 System.out.println("Sub category not found");
             }
         } else {

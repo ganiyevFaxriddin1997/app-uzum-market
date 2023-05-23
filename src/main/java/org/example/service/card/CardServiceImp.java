@@ -1,4 +1,4 @@
-package org.example.card;
+package org.example.service.card;
 
 
 import org.example.entities.Card;
@@ -162,13 +162,15 @@ public class CardServiceImp implements CardService {
     }
 
     @Override
-    public Card getByOwnerId(int ownerId) throws SQLException {
+    public List<Card> getByOwnerId(int ownerId) throws SQLException {
         var connection = getConnection();
         String query = "select * from card where owner_id = ?";
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, ownerId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
+        List<Card> cards = new ArrayList<>();
+
+        while (resultSet.next()) {
             var card = Card.builder()
                     .id(resultSet.getInt("id"))
                     .serialNumber(resultSet.getString("serial_number"))
@@ -178,11 +180,11 @@ public class CardServiceImp implements CardService {
                     .balance(resultSet.getDouble("balance"))
                     .ownerId(resultSet.getInt("owner_id"))
                     .build();
-            return card;
+            cards.add(card);
         }
         resultSet.close();
         preparedStatement.close();
         connection.close();
-        return null;
+        return cards;
     }
 }

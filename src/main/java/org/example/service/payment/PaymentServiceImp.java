@@ -1,5 +1,6 @@
-package org.example.payment;
+package org.example.service.payment;
 
+import org.example.entities.Order;
 import org.example.entities.Payment;
 
 import java.sql.ResultSet;
@@ -148,11 +149,10 @@ public class PaymentServiceImp implements PaymentService {
         var connection = getConnection();
         String query = "select order_id from payment_order where payment_id = ?";
         var preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1,paymentId);
+        preparedStatement.setInt(1, paymentId);
         ResultSet resultSet = preparedStatement.executeQuery();
-        var result = 0;
         while (resultSet.next()) {
-            result = resultSet.getInt(1);
+            var result = resultSet.getInt(1);
             orderIds.add(result);
         }
         resultSet.close();
@@ -168,7 +168,7 @@ public class PaymentServiceImp implements PaymentService {
         String query = "select id from payment where card_id = (select id from card where owner_id = ?)";
         var preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
-       var result =  0;
+        var result = 0;
         while (resultSet.next()) {
             result = resultSet.getInt(1);
             paymentIds.add(result);
@@ -176,5 +176,52 @@ public class PaymentServiceImp implements PaymentService {
         preparedStatement.close();
         connection.close();
         return paymentIds;
+    }
+
+    @Override
+    public List<Payment> getByCardId(int cardId) throws SQLException {
+        List<Payment> payments = new ArrayList<>();
+        var connection = getConnection();
+        String query = "select * from payment where card_id = ?";
+        var preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, cardId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            var payment = Payment.builder()
+                    .id(resultSet.getInt("id"))
+                    .cardId(resultSet.getInt("card_id"))
+                    .price(resultSet.getDouble("price"))
+                    .createdDate(resultSet.getTimestamp("created_date"))
+                    .build();
+            payments.add(payment);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return payments;
+    }
+
+    @Override
+    public List<Order> getOrderFromPO(int paymentId) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        var connection = getConnection();
+        String query = "select o.id, o.user_id, o.product_id, o.amount from orders o\n" +
+                "join payment_order po on o.id = po.order_id where po.payment_id = ?";
+        var preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, paymentId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            var order = Order.builder()
+                    .id(resultSet.getInt("id"))
+                    .userId(resultSet.getInt("user_id"))
+                    .productId(resultSet.getInt("product_id"))
+                    .amountProduct(resultSet.getInt("amount"))
+                    .build();
+            orders.add(order);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return orders;
     }
 }

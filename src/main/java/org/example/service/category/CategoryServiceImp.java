@@ -1,7 +1,8 @@
-package org.example.category;
+package org.example.service.category;
 
 import org.example.entities.Category;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +29,18 @@ public class CategoryServiceImp implements CategoryService {
     @Override
     public boolean delete(int id) throws SQLException {
         var connection = getConnection();
-        String query = "delete from category where id = ?";
+        String query = "select delete_category(?)";
         var preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, id);
-        int result = preparedStatement.executeUpdate();
+        ResultSet resultSet = preparedStatement.executeQuery();
+        var result = false;
+        if (resultSet.next()) {
+            result = resultSet.getBoolean(1);
+        }
+        resultSet.close();
         preparedStatement.close();
         connection.close();
-        return result > 0;
+        return result;
     }
 
     @Override

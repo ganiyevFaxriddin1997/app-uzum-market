@@ -1,4 +1,4 @@
-package org.example.order;
+package org.example.service.order;
 
 import org.example.entities.Order;
 
@@ -182,5 +182,10 @@ public class OrderServiceImp implements OrderService{
         preparedStatement.close();
         connection.close();
         return result;
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(int userId) {
+        return null;
     }
 }

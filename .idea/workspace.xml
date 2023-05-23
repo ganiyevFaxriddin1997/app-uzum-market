@@ -5,54 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59774782-5232-4abb-a216-0beeebbf8545" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/BaseService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/card/CardService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/card/CardServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/category/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/category/CategoryServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/ResponseOfBasket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/front/ManagerFront.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/front/ProductOwnerFront.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/front/SystemOwnerFront.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/front/UserFront.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/order/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/order/OrderServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/payment/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/payment/PaymentServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/product/ProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/product/ProductServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/subCategory/SubCategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/subCategory/SubCategoryServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/user/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/user/UserServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b85af74b-7676-4a06-81e2-6b2989c839f6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b85af74b-7676-4a06-81e2-6b2989c839f6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/BaseService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/enums/CardType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/enums/CardType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/enums/Gender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/enums/Gender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/enums/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/enums/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Category.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/SubCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/SubCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/BaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/BaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/cardService/CardService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/cardService/CardServiceImp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/orderService/OrderService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/orderService/OrderServiceImp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/paymentService/PaymentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/paymentService/PaymentServiceImp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/productService/ProductService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/productService/ProductServiceImp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/userService/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/userService/UserServiceImp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/card/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/card/CardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/card/CardServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/card/CardServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/category/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/category/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/category/CategoryServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/category/CategoryServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/front/ManagerFront.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/front/ManagerFront.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/front/ProductOwnerFront.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/front/ProductOwnerFront.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/front/SystemOwnerFront.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/front/SystemOwnerFront.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/front/UserFront.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/front/UserFront.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/order/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/order/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/order/OrderServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/order/OrderServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/payment/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/payment/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/payment/PaymentServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/payment/PaymentServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/product/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/product/ProductServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/product/ProductServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/subCategory/SubCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/subCategory/SubCategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/subCategory/SubCategoryServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/subCategory/SubCategoryServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/user/UserServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/user/UserServiceImp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +134,12 @@
       <workItem from="1684562507576" duration="765000" />
       <workItem from="1684591378915" duration="4378000" />
       <workItem from="1684671797552" duration="12896000" />
-      <workItem from="1684686539049" duration="1214000" />
+      <workItem from="1684686539049" duration="2958000" />
+      <workItem from="1684745111968" duration="1283000" />
+      <workItem from="1684762341796" duration="2957000" />
+      <workItem from="1684765356509" duration="815000" />
+      <workItem from="1684766332539" duration="10077000" />
+      <workItem from="1684829480648" duration="12158000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1684297785493</created>
@@ -177,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684391676091</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update">
+      <created>1684687990672</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684687990672</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,5 +197,21 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/payment/PaymentServiceImp.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/service/payment/PaymentServiceImp.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

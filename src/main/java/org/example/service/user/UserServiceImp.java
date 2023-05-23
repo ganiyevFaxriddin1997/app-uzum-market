@@ -1,4 +1,4 @@
-package org.example.user;
+package org.example.service.user;
 
 
 import org.example.entities.User;
